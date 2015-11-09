@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Caesar
+namespace Cryptology
 {
-    class CaesarCipher
+    public enum AlphabetType
     {
+        Russian,
+        English
     }
 }
