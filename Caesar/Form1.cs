@@ -38,14 +38,21 @@ namespace Caesar
             }
         }
 
-        private string RemoveUnnecessarySymbols(string text, AlphabetType type)
+        private string RemoveUnnecessarySymbols(string text)
         {
             string newtext = "";
             text = text.ToLower().Replace('ё', 'е');
             foreach (var symbol in text)
             {
-                if (Data.GetAlphabets()[type].Letters.Contains(symbol))
-                    newtext += symbol;
+                foreach (var key in Data.GetAlphabets().Keys)
+                {
+                    if (Data.GetAlphabets()[key].Letters.Contains(symbol))
+                    {
+                        newtext += symbol;
+                        break;
+                    }
+                }
+                    
             }
             return newtext;
         }
@@ -53,9 +60,9 @@ namespace Caesar
         private void EncryptButton_Click(object sender, EventArgs e)
         {
             if (SelectedLanguageComboBox.SelectedIndex == 0)
-                cipheredText = cypher.Encrypt(RemoveUnnecessarySymbols(sourceText, AlphabetType.Russian), AlphabetType.Russian);
+                cipheredText = cypher.Encrypt(RemoveUnnecessarySymbols(sourceText), AlphabetType.Russian);
             else
-                cipheredText = cypher.Encrypt(RemoveUnnecessarySymbols(sourceText, AlphabetType.English), AlphabetType.English);
+                cipheredText = cypher.Encrypt(RemoveUnnecessarySymbols(sourceText), AlphabetType.English);
             OutputRichTextBox.Text += cipheredText;
             OutputRichTextBox.Text += "\n";
         }
@@ -103,7 +110,12 @@ namespace Caesar
                 cypher = new CaesarCypher(GetM(), AlphabetType.English);
         }
 
-        private void textBoxM_TextChanged(object sender, EventArgs e)
+        private void ChangeMButton_Click(object sender, EventArgs e)
+        {
+            CreateCaesar();
+        }
+
+        private void SelectedLanguageComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             CreateCaesar();
         }

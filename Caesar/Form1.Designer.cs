@@ -41,6 +41,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.SouceRichTextBox = new System.Windows.Forms.RichTextBox();
             this.OutputRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.ChangeMButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.SuspendLayout();
@@ -58,6 +59,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.ChangeMButton);
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.textBoxM);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
@@ -85,7 +87,6 @@
             this.textBoxM.TabIndex = 0;
             this.textBoxM.Text = "3";
             this.textBoxM.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBoxM.TextChanged += new System.EventHandler(this.textBoxM_TextChanged);
             // 
             // tabPage2
             // 
@@ -147,6 +148,7 @@
             this.SelectedLanguageComboBox.Name = "SelectedLanguageComboBox";
             this.SelectedLanguageComboBox.Size = new System.Drawing.Size(121, 21);
             this.SelectedLanguageComboBox.TabIndex = 7;
+            this.SelectedLanguageComboBox.SelectedIndexChanged += new System.EventHandler(this.SelectedLanguageComboBox_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -172,6 +174,16 @@
             this.OutputRichTextBox.Size = new System.Drawing.Size(448, 280);
             this.OutputRichTextBox.TabIndex = 10;
             this.OutputRichTextBox.Text = "";
+            // 
+            // ChangeMButton
+            // 
+            this.ChangeMButton.Location = new System.Drawing.Point(118, 19);
+            this.ChangeMButton.Name = "ChangeMButton";
+            this.ChangeMButton.Size = new System.Drawing.Size(75, 23);
+            this.ChangeMButton.TabIndex = 2;
+            this.ChangeMButton.Text = "Изменить";
+            this.ChangeMButton.UseVisualStyleBackColor = true;
+            this.ChangeMButton.Click += new System.EventHandler(this.ChangeMButton_Click);
             // 
             // Form1
             // 
@@ -212,6 +224,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.RichTextBox SouceRichTextBox;
         private System.Windows.Forms.RichTextBox OutputRichTextBox;
+        private System.Windows.Forms.Button ChangeMButton;
     }
 }
 

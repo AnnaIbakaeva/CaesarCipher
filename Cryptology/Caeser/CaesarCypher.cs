@@ -18,7 +18,7 @@ namespace Cryptology
         public CaesarCypher(int m, AlphabetType alphabetType)
         {
             CurrentAlphabet = Data.GetAlphabets()[alphabetType];
-            if (m < 0)
+            while (m < 0)
                 m += CurrentAlphabet.Letters.Count;
             var d = m / CurrentAlphabet.Letters.Count;
             m -= CurrentAlphabet.Letters.Count * d;
@@ -47,15 +47,12 @@ namespace Cryptology
             foreach (var symbol in text)
             {
                 var index = CurrentAlphabet.Letters.IndexOf(symbol);
-                var shiftIndex = index + M;
-                if (shiftIndex >= shiftAlphabet.Letters.Count)
-                    shiftIndex -= shiftAlphabet.Letters.Count;
                 if (symbolsCounter == 5)
                 {
                     encryptedText += " ";
                     symbolsCounter = 0;
                 }
-                encryptedText += shiftAlphabet.Letters[shiftIndex];
+                encryptedText += shiftAlphabet.Letters[index];
                 symbolsCounter++;
             }
             return encryptedText;
@@ -69,15 +66,12 @@ namespace Cryptology
             foreach (var symbol in text)
             {
                 var index = shiftAlphabet.Letters.IndexOf(symbol);
-                var unshiftIndex = index - M;
-                if (unshiftIndex < 0)
-                    unshiftIndex += shiftAlphabet.Letters.Count;
                 if (symbolsCounter == 5)
                 {
                     decodedText += " ";
                     symbolsCounter = 0;
                 }
-                decodedText += CurrentAlphabet.Letters[unshiftIndex];
+                decodedText += CurrentAlphabet.Letters[index];
                 symbolsCounter++;
             }
             return decodedText;
