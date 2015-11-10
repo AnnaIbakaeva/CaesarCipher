@@ -33,14 +33,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxM = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.OuputListBox = new System.Windows.Forms.ListBox();
             this.EncryptButton = new System.Windows.Forms.Button();
             this.DecryptButton = new System.Windows.Forms.Button();
             this.BreakOpenButton = new System.Windows.Forms.Button();
-            this.SourceTextListBox = new System.Windows.Forms.ListBox();
             this.ChangeSourceTextButton = new System.Windows.Forms.Button();
             this.SelectedLanguageComboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.SouceRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.OutputRichTextBox = new System.Windows.Forms.RichTextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.SuspendLayout();
@@ -85,6 +85,7 @@
             this.textBoxM.TabIndex = 0;
             this.textBoxM.Text = "3";
             this.textBoxM.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxM.TextChanged += new System.EventHandler(this.textBoxM_TextChanged);
             // 
             // tabPage2
             // 
@@ -95,14 +96,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Шифр Виженера";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // OuputListBox
-            // 
-            this.OuputListBox.FormattingEnabled = true;
-            this.OuputListBox.Location = new System.Drawing.Point(290, 28);
-            this.OuputListBox.Name = "OuputListBox";
-            this.OuputListBox.Size = new System.Drawing.Size(448, 290);
-            this.OuputListBox.TabIndex = 1;
             // 
             // EncryptButton
             // 
@@ -134,16 +127,6 @@
             this.BreakOpenButton.UseVisualStyleBackColor = true;
             this.BreakOpenButton.Click += new System.EventHandler(this.BreakOpenButton_Click);
             // 
-            // SourceTextListBox
-            // 
-            this.SourceTextListBox.FormattingEnabled = true;
-            this.SourceTextListBox.Items.AddRange(new object[] {
-            "Веб-страница недоступна"});
-            this.SourceTextListBox.Location = new System.Drawing.Point(19, 185);
-            this.SourceTextListBox.Name = "SourceTextListBox";
-            this.SourceTextListBox.Size = new System.Drawing.Size(220, 95);
-            this.SourceTextListBox.TabIndex = 5;
-            // 
             // ChangeSourceTextButton
             // 
             this.ChangeSourceTextButton.Location = new System.Drawing.Point(19, 298);
@@ -174,19 +157,35 @@
             this.label1.TabIndex = 8;
             this.label1.Text = "Выберете язык";
             // 
+            // SouceRichTextBox
+            // 
+            this.SouceRichTextBox.Location = new System.Drawing.Point(19, 169);
+            this.SouceRichTextBox.Name = "SouceRichTextBox";
+            this.SouceRichTextBox.Size = new System.Drawing.Size(224, 113);
+            this.SouceRichTextBox.TabIndex = 9;
+            this.SouceRichTextBox.Text = "Веб-страница недоступна";
+            // 
+            // OutputRichTextBox
+            // 
+            this.OutputRichTextBox.Location = new System.Drawing.Point(290, 41);
+            this.OutputRichTextBox.Name = "OutputRichTextBox";
+            this.OutputRichTextBox.Size = new System.Drawing.Size(448, 280);
+            this.OutputRichTextBox.TabIndex = 10;
+            this.OutputRichTextBox.Text = "";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(766, 374);
+            this.Controls.Add(this.OutputRichTextBox);
+            this.Controls.Add(this.SouceRichTextBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.SelectedLanguageComboBox);
             this.Controls.Add(this.ChangeSourceTextButton);
-            this.Controls.Add(this.SourceTextListBox);
             this.Controls.Add(this.BreakOpenButton);
             this.Controls.Add(this.DecryptButton);
             this.Controls.Add(this.EncryptButton);
-            this.Controls.Add(this.OuputListBox);
             this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
             this.Text = "Шифрование";
@@ -204,15 +203,15 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TextBox textBoxM;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.ListBox OuputListBox;
         private System.Windows.Forms.Button EncryptButton;
         private System.Windows.Forms.Button DecryptButton;
         private System.Windows.Forms.Button BreakOpenButton;
-        private System.Windows.Forms.ListBox SourceTextListBox;
         private System.Windows.Forms.Button ChangeSourceTextButton;
         private System.Windows.Forms.ComboBox SelectedLanguageComboBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.RichTextBox SouceRichTextBox;
+        private System.Windows.Forms.RichTextBox OutputRichTextBox;
     }
 }
 
