@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caesar", "Caesar\Caesar.csproj", "{DEB30F41-1AED-4382-A3C5-F40CC85507D9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormApplication", "Caesar\FormApplication.csproj", "{DEB30F41-1AED-4382-A3C5-F40CC85507D9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cryptology", "Cryptology\Cryptology.csproj", "{BD6E2DB4-A38A-4509-A537-9B7F078ADE49}"
 EndProject

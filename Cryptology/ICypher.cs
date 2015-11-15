@@ -5,12 +5,12 @@ using System.Net.Security;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cryptology
+namespace FormApplication
 {
     public interface ICypher
     {
-        string Encrypt(string text, AlphabetType alphabetType);
-        string Decrypt(string text, AlphabetType alphabetType);
-        string BreakOpen(string text, AlphabetType alphabetType);
+        string Encrypt(string text);
+        string Decrypt(string text);
+        string BreakOpen(string text);
     }
 }

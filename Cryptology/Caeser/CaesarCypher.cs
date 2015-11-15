@@ -5,81 +5,135 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cryptology
+namespace FormApplication
 {
     public class CaesarCypher : ICypher
     {
         public int M { get; set; }
 
-        public Alphabet CurrentAlphabet { get; set; }
+        private List<Alphabet> _alphabets;
 
-        private Alphabet shiftAlphabet;
-
-        public CaesarCypher(int m, AlphabetType alphabetType)
+        public CaesarCypher(int m)
         {
-            CurrentAlphabet = Data.GetAlphabets()[alphabetType];
-            while (m < 0)
-                m += CurrentAlphabet.Letters.Count;
-            var d = m / CurrentAlphabet.Letters.Count;
-            m -= CurrentAlphabet.Letters.Count * d;
+            _alphabets = new List<Alphabet>(Data.GetAlphabets().Values);
             M = m;
-            ChangeAlphabets(alphabetType);
         }
 
-        public void ChangeAlphabets(AlphabetType alphabetType)
+        public string Encrypt(string text)
         {
-            CurrentAlphabet = Data.GetAlphabets()[alphabetType];
-            shiftAlphabet = new Alphabet();
-            for (var i = M; i < CurrentAlphabet.Letters.Count + M; i++)
-            {
-                var j = i;
-                if (j >= CurrentAlphabet.Letters.Count)
-                    j -= CurrentAlphabet.Letters.Count;
-                shiftAlphabet.Letters.Add(CurrentAlphabet.Letters[j]);
-            }
-        }
-
-        public string Encrypt(string text, AlphabetType alphabetType)
-        {
-            ChangeAlphabets(alphabetType);
             var encryptedText = "";
-            var symbolsCounter = 0;
             foreach (var symbol in text)
             {
-                var index = CurrentAlphabet.Letters.IndexOf(symbol);
-                if (symbolsCounter == 5)
+                foreach (var alphabet in _alphabets)
                 {
-                    encryptedText += " ";
-                    symbolsCounter = 0;
+                    var index = alphabet.Letters.IndexOf(symbol);
+                    if (index != -1)
+                    {
+                        if (encryptedText.Length > 4 && encryptedText.Length % 6 == 0)
+                        {
+                            encryptedText += " ";
+                        }
+                        var shiftIndex = index + M;
+                        while (shiftIndex >= alphabet.Letters.Count)
+                            shiftIndex -= alphabet.Letters.Count;
+                        while (shiftIndex < 0)
+                            shiftIndex += alphabet.Letters.Count;
+                        encryptedText += alphabet.Letters[shiftIndex];
+                        break;
+                    }
                 }
-                encryptedText += shiftAlphabet.Letters[index];
-                symbolsCounter++;
             }
             return encryptedText;
         }
 
-        public string Decrypt(string text, AlphabetType alphabetType)
+        public string Decrypt(string text)
         {
-            ChangeAlphabets(alphabetType);
             var decodedText = "";
-            var symbolsCounter = 0;
             foreach (var symbol in text)
             {
-                var index = shiftAlphabet.Letters.IndexOf(symbol);
-                if (symbolsCounter == 5)
+                foreach (var alphabet in _alphabets)
                 {
-                    decodedText += " ";
-                    symbolsCounter = 0;
+                    var index = alphabet.Letters.IndexOf(symbol);
+                    if (index != -1)
+                    {
+                        if (decodedText.Length > 4 && decodedText.Length % 6 == 0)
+                        {
+                            decodedText += " ";
+                        }
+                        var shiftIndex = index - M;
+                        while (shiftIndex >= alphabet.Letters.Count)
+                            shiftIndex -= alphabet.Letters.Count;
+                        while (shiftIndex < 0)
+                            shiftIndex += alphabet.Letters.Count;
+                        decodedText += alphabet.Letters[shiftIndex];
+                        break;
+                    }
                 }
-                decodedText += CurrentAlphabet.Letters[index];
-                symbolsCounter++;
             }
             return decodedText;
         }
 
-        public string BreakOpen(string text, AlphabetType alphabetType)
+        private Dictionary<char, float> EvaluateActualFrequency(string text)
         {
-            throw new NotImplementedException();
+            var frequencies = new Dictionary<char, float>();
+            var symbolsCounter = new Dictionary<char, int>();
+
+            foreach (var symbol in text)
+            {
+                if (!symbolsCounter.ContainsKey(symbol))
+                    symbolsCounter.Add(symbol, 0);
+                symbolsCounter[symbol] += 1;
+            }
+
+            foreach (var key in symbolsCounter.Keys)
+            {
+                var symbFrequency = symbolsCounter[key] / symbolsCounter.Count;
+                frequencies.Add(key, symbFrequency);
+            }
+
+            return frequencies;
+        }
+
+        public string BreakOpen(string text)
+        {
+            var savedM = M;
+            text = text.Replace(" ", "");
+            var tableFrequincies = Data.GetTableFrequencies();
+
+            var minSumSquares = double.MaxValue;
+            var resultText = "";
+            for (int i = 0; i < 32; i++)
+            {
+                M = i;
+                var decryptedText = Decrypt(text).Replace(" ", "");
+                var actualFrequencies = EvaluateActualFrequency(decryptedText);
+
+                double sumSquares = 0;
+                foreach (var key in actualFrequencies.Keys)
+                {
+                    if (!tableFrequincies.ContainsKey(key))
+                        throw new Exception("Невозможно расшифровать символ " + key);
+                    else
+                    {
+                        sumSquares += Math.Pow((actualFrequencies[key] - tableFrequincies[key]), 2);
+                    }
+                }
+                if (sumSquares < minSumSquares)
+                {
+                    minSumSquares = sumSquares;
+                    resultText = "";
+                    for (int j = 0; j < decryptedText.Length; j++)
+                    {
+                        resultText += decryptedText[j];
+                        if (resultText.Length > 4 && resultText.Length % 6 == 0)
+                        {
+                            resultText += " ";
+                        }
+                    }
+                }
+            }
+            M = savedM;
+            return resultText;
         }
     }
 }

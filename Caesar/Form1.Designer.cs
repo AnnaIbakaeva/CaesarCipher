@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.ChangeMButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxM = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -37,11 +39,8 @@
             this.DecryptButton = new System.Windows.Forms.Button();
             this.BreakOpenButton = new System.Windows.Forms.Button();
             this.ChangeSourceTextButton = new System.Windows.Forms.Button();
-            this.SelectedLanguageComboBox = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.SouceRichTextBox = new System.Windows.Forms.RichTextBox();
             this.OutputRichTextBox = new System.Windows.Forms.RichTextBox();
-            this.ChangeMButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.SuspendLayout();
@@ -69,6 +68,16 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Шифр Цезаря";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // ChangeMButton
+            // 
+            this.ChangeMButton.Location = new System.Drawing.Point(118, 19);
+            this.ChangeMButton.Name = "ChangeMButton";
+            this.ChangeMButton.Size = new System.Drawing.Size(75, 23);
+            this.ChangeMButton.TabIndex = 2;
+            this.ChangeMButton.Text = "Изменить";
+            this.ChangeMButton.UseVisualStyleBackColor = true;
+            this.ChangeMButton.Click += new System.EventHandler(this.ChangeMButton_Click);
             // 
             // label2
             // 
@@ -130,42 +139,21 @@
             // 
             // ChangeSourceTextButton
             // 
-            this.ChangeSourceTextButton.Location = new System.Drawing.Point(19, 298);
+            this.ChangeSourceTextButton.Location = new System.Drawing.Point(19, 300);
             this.ChangeSourceTextButton.Name = "ChangeSourceTextButton";
             this.ChangeSourceTextButton.Size = new System.Drawing.Size(224, 23);
             this.ChangeSourceTextButton.TabIndex = 6;
-            this.ChangeSourceTextButton.Text = "Изменить исходный текст";
+            this.ChangeSourceTextButton.Text = "Изменить текущий текст";
             this.ChangeSourceTextButton.UseVisualStyleBackColor = true;
             this.ChangeSourceTextButton.Click += new System.EventHandler(this.ChangeSourceTextButton_Click);
             // 
-            // SelectedLanguageComboBox
-            // 
-            this.SelectedLanguageComboBox.FormattingEnabled = true;
-            this.SelectedLanguageComboBox.Items.AddRange(new object[] {
-            "Русский",
-            "Английский"});
-            this.SelectedLanguageComboBox.Location = new System.Drawing.Point(118, 132);
-            this.SelectedLanguageComboBox.Name = "SelectedLanguageComboBox";
-            this.SelectedLanguageComboBox.Size = new System.Drawing.Size(121, 21);
-            this.SelectedLanguageComboBox.TabIndex = 7;
-            this.SelectedLanguageComboBox.SelectedIndexChanged += new System.EventHandler(this.SelectedLanguageComboBox_SelectedIndexChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 135);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(86, 13);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "Выберете язык";
-            // 
             // SouceRichTextBox
             // 
-            this.SouceRichTextBox.Location = new System.Drawing.Point(19, 169);
+            this.SouceRichTextBox.Location = new System.Drawing.Point(19, 132);
             this.SouceRichTextBox.Name = "SouceRichTextBox";
-            this.SouceRichTextBox.Size = new System.Drawing.Size(224, 113);
+            this.SouceRichTextBox.Size = new System.Drawing.Size(224, 152);
             this.SouceRichTextBox.TabIndex = 9;
-            this.SouceRichTextBox.Text = "Веб-страница недоступна";
+            this.SouceRichTextBox.Text = resources.GetString("SouceRichTextBox.Text");
             // 
             // OutputRichTextBox
             // 
@@ -175,16 +163,6 @@
             this.OutputRichTextBox.TabIndex = 10;
             this.OutputRichTextBox.Text = "";
             // 
-            // ChangeMButton
-            // 
-            this.ChangeMButton.Location = new System.Drawing.Point(118, 19);
-            this.ChangeMButton.Name = "ChangeMButton";
-            this.ChangeMButton.Size = new System.Drawing.Size(75, 23);
-            this.ChangeMButton.TabIndex = 2;
-            this.ChangeMButton.Text = "Изменить";
-            this.ChangeMButton.UseVisualStyleBackColor = true;
-            this.ChangeMButton.Click += new System.EventHandler(this.ChangeMButton_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -192,8 +170,6 @@
             this.ClientSize = new System.Drawing.Size(766, 374);
             this.Controls.Add(this.OutputRichTextBox);
             this.Controls.Add(this.SouceRichTextBox);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.SelectedLanguageComboBox);
             this.Controls.Add(this.ChangeSourceTextButton);
             this.Controls.Add(this.BreakOpenButton);
             this.Controls.Add(this.DecryptButton);
@@ -205,7 +181,6 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -219,8 +194,6 @@
         private System.Windows.Forms.Button DecryptButton;
         private System.Windows.Forms.Button BreakOpenButton;
         private System.Windows.Forms.Button ChangeSourceTextButton;
-        private System.Windows.Forms.ComboBox SelectedLanguageComboBox;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.RichTextBox SouceRichTextBox;
         private System.Windows.Forms.RichTextBox OutputRichTextBox;

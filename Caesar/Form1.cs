@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Cryptology;
+using FormApplication;
 
 namespace Caesar
 {
@@ -15,14 +15,11 @@ namespace Caesar
     {
         private ICypher cypher;
         private string sourceText;
-        private string cipheredText;
         public Form1()
         {
             InitializeComponent();
             sourceText = SouceRichTextBox.Text;
-
-            SelectedLanguageComboBox.SelectedIndex = 0;
-
+            
             var selectedTab = tabControl1.SelectedTab;
             if (selectedTab.Text == @"Шифр Цезаря")
             {
@@ -51,37 +48,33 @@ namespace Caesar
                         newtext += symbol;
                         break;
                     }
-                }
-                    
+                }                    
             }
             return newtext;
         }
 
         private void EncryptButton_Click(object sender, EventArgs e)
         {
-            if (SelectedLanguageComboBox.SelectedIndex == 0)
-                cipheredText = cypher.Encrypt(RemoveUnnecessarySymbols(sourceText), AlphabetType.Russian);
-            else
-                cipheredText = cypher.Encrypt(RemoveUnnecessarySymbols(sourceText), AlphabetType.English);
+            var cipheredText = cypher.Encrypt(RemoveUnnecessarySymbols(sourceText));
             OutputRichTextBox.Text += cipheredText;
+            OutputRichTextBox.Text += "\n";
             OutputRichTextBox.Text += "\n";
         }
 
         private void DecryptButton_Click(object sender, EventArgs e)
         {
-            string text;
-            if (SelectedLanguageComboBox.SelectedIndex == 0)
-                 text = cypher.Decrypt(cipheredText.Replace(" ", ""), AlphabetType.Russian);
-            else
-                text = cypher.Decrypt(cipheredText.Replace(" ", ""), AlphabetType.English);
+            string text = cypher.Decrypt(RemoveUnnecessarySymbols(sourceText));
             OutputRichTextBox.Text += text;
+            OutputRichTextBox.Text += "\n";
             OutputRichTextBox.Text += "\n";
         }
 
         private void BreakOpenButton_Click(object sender, EventArgs e)
         {
-            //var text = cypher.BreakOpen(cipheredText);
-            //OuputListBox.Items.Add(text);
+            var text = cypher.BreakOpen(RemoveUnnecessarySymbols(sourceText));
+            OutputRichTextBox.Text += text;
+            OutputRichTextBox.Text += "\n";
+            OutputRichTextBox.Text += "\n";
         }
 
         private void ChangeSourceTextButton_Click(object sender, EventArgs e)
@@ -104,10 +97,7 @@ namespace Caesar
 
         private void CreateCaesar()
         {
-            if (SelectedLanguageComboBox.SelectedIndex == 0)
-                cypher = new CaesarCypher(GetM(), AlphabetType.Russian);
-            else
-                cypher = new CaesarCypher(GetM(), AlphabetType.English);
+            cypher = new CaesarCypher(GetM());
         }
 
         private void ChangeMButton_Click(object sender, EventArgs e)
@@ -115,9 +105,9 @@ namespace Caesar
             CreateCaesar();
         }
 
-        private void SelectedLanguageComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void CLearRichTextButton_Click(object sender, EventArgs e)
         {
-            CreateCaesar();
+            OutputRichTextBox.Clear();
         }
     }
 }
