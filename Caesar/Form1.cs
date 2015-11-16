@@ -19,7 +19,7 @@ namespace Caesar
         {
             InitializeComponent();
             sourceText = SouceRichTextBox.Text;
-            
+
             var selectedTab = tabControl1.SelectedTab;
             if (selectedTab.Text == @"Шифр Цезаря")
             {
@@ -48,7 +48,7 @@ namespace Caesar
                         newtext += symbol;
                         break;
                     }
-                }                    
+                }
             }
             return newtext;
         }
@@ -71,10 +71,17 @@ namespace Caesar
 
         private void BreakOpenButton_Click(object sender, EventArgs e)
         {
-            var text = cypher.BreakOpen(RemoveUnnecessarySymbols(sourceText));
-            OutputRichTextBox.Text += text;
-            OutputRichTextBox.Text += "\n";
-            OutputRichTextBox.Text += "\n";
+            try
+            {
+                var text = cypher.BreakOpen(RemoveUnnecessarySymbols(sourceText));
+                OutputRichTextBox.Text += text;
+                OutputRichTextBox.Text += "\n";
+                OutputRichTextBox.Text += "\n";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void ChangeSourceTextButton_Click(object sender, EventArgs e)
@@ -90,6 +97,7 @@ namespace Caesar
             }
             catch (Exception)
             {
+                textBoxM.Text = "0";
                 MessageBox.Show(@"Некорректное значение m");
                 return 0;
             }

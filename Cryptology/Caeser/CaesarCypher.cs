@@ -112,7 +112,7 @@ namespace FormApplication
                 foreach (var key in actualFrequencies.Keys)
                 {
                     if (!tableFrequincies.ContainsKey(key))
-                        throw new Exception("Невозможно расшифровать символ " + key);
+                        throw new Exception(String.Format("Отсутствует табличная частота для символа '{0}'", key));
                     else
                     {
                         sumSquares += Math.Pow((actualFrequencies[key] - tableFrequincies[key]), 2);
