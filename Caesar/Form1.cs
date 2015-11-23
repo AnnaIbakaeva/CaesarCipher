@@ -17,21 +17,26 @@ namespace Caesar
         private string sourceText;
         public Form1()
         {
-            InitializeComponent();
-            sourceText = SouceRichTextBox.Text;
+            try
+            {
+                InitializeComponent();
+                sourceText = SouceRichTextBox.Text;
 
-            var selectedTab = tabControl1.SelectedTab;
-            if (selectedTab.Text == @"Шифр Цезаря")
-            {
-                CreateCaesar();
+                var selectedTab = tabControl1.SelectedTab;
+                switch(selectedTab.Text)
+                {
+                    case @"Шифр Цезаря":
+                        cypher = new CaesarCypher(GetM());
+                        break;
+                    case @"Шифр Виженера":
+                        break;
+                    default:
+                        throw new Exception("Не найден текущий вид шифрования");
+                }
             }
-            else if (selectedTab.Text == @"Шифр Виженера")
+            catch (Exception e)
             {
-
-            }
-            else
-            {
-                throw new Exception("Не найден текущий вид шифрования");
+                MessageBox.Show(e.Message);
             }
         }
 
@@ -55,18 +60,32 @@ namespace Caesar
 
         private void EncryptButton_Click(object sender, EventArgs e)
         {
-            var cipheredText = cypher.Encrypt(RemoveUnnecessarySymbols(sourceText));
-            OutputRichTextBox.Text += cipheredText;
-            OutputRichTextBox.Text += "\n";
-            OutputRichTextBox.Text += "\n";
+            try
+            {
+                var cipheredText = cypher.Encrypt(RemoveUnnecessarySymbols(sourceText));
+                OutputRichTextBox.Text += cipheredText;
+                OutputRichTextBox.Text += "\n";
+                OutputRichTextBox.Text += "\n";
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
 
         private void DecryptButton_Click(object sender, EventArgs e)
         {
-            string text = cypher.Decrypt(RemoveUnnecessarySymbols(sourceText));
-            OutputRichTextBox.Text += text;
-            OutputRichTextBox.Text += "\n";
-            OutputRichTextBox.Text += "\n";
+            try
+            {
+                string text = cypher.Decrypt(RemoveUnnecessarySymbols(sourceText));
+                OutputRichTextBox.Text += text;
+                OutputRichTextBox.Text += "\n";
+                OutputRichTextBox.Text += "\n";
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
 
         private void BreakOpenButton_Click(object sender, EventArgs e)
@@ -97,25 +116,33 @@ namespace Caesar
             }
             catch (Exception)
             {
-                textBoxM.Text = "0";
-                MessageBox.Show(@"Некорректное значение m");
-                return 0;
+                throw new Exception(@"Некорректное значение m");
             }
         }
 
-        private void CreateCaesar()
+        private void ChangeMValue_Click(object sender, EventArgs e)
         {
-            cypher = new CaesarCypher(GetM());
-        }
-
-        private void ChangeMButton_Click(object sender, EventArgs e)
-        {
-            CreateCaesar();
+            try
+            {
+                if (cypher is CaesarCypher)
+                {
+                    (cypher as CaesarCypher).M = GetM();
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
 
         private void CLearRichTextButton_Click(object sender, EventArgs e)
         {
             OutputRichTextBox.Clear();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SouceRichTextBox.Clear();
         }
     }
 }

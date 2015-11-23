@@ -31,16 +31,16 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.ChangeMButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxM = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.EncryptButton = new System.Windows.Forms.Button();
             this.DecryptButton = new System.Windows.Forms.Button();
             this.BreakOpenButton = new System.Windows.Forms.Button();
-            this.ChangeSourceTextButton = new System.Windows.Forms.Button();
             this.SouceRichTextBox = new System.Windows.Forms.RichTextBox();
             this.OutputRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.SuspendLayout();
@@ -58,7 +58,6 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.ChangeMButton);
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.textBoxM);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
@@ -68,16 +67,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Шифр Цезаря";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // ChangeMButton
-            // 
-            this.ChangeMButton.Location = new System.Drawing.Point(118, 19);
-            this.ChangeMButton.Name = "ChangeMButton";
-            this.ChangeMButton.Size = new System.Drawing.Size(75, 23);
-            this.ChangeMButton.TabIndex = 2;
-            this.ChangeMButton.Text = "Изменить";
-            this.ChangeMButton.UseVisualStyleBackColor = true;
-            this.ChangeMButton.Click += new System.EventHandler(this.ChangeMButton_Click);
             // 
             // label2
             // 
@@ -96,6 +85,7 @@
             this.textBoxM.TabIndex = 0;
             this.textBoxM.Text = "3";
             this.textBoxM.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxM.Leave += new System.EventHandler(this.ChangeMValue_Click);
             // 
             // tabPage2
             // 
@@ -137,23 +127,14 @@
             this.BreakOpenButton.UseVisualStyleBackColor = true;
             this.BreakOpenButton.Click += new System.EventHandler(this.BreakOpenButton_Click);
             // 
-            // ChangeSourceTextButton
-            // 
-            this.ChangeSourceTextButton.Location = new System.Drawing.Point(19, 300);
-            this.ChangeSourceTextButton.Name = "ChangeSourceTextButton";
-            this.ChangeSourceTextButton.Size = new System.Drawing.Size(224, 23);
-            this.ChangeSourceTextButton.TabIndex = 6;
-            this.ChangeSourceTextButton.Text = "Изменить текущий текст";
-            this.ChangeSourceTextButton.UseVisualStyleBackColor = true;
-            this.ChangeSourceTextButton.Click += new System.EventHandler(this.ChangeSourceTextButton_Click);
-            // 
             // SouceRichTextBox
             // 
             this.SouceRichTextBox.Location = new System.Drawing.Point(19, 132);
             this.SouceRichTextBox.Name = "SouceRichTextBox";
-            this.SouceRichTextBox.Size = new System.Drawing.Size(224, 152);
+            this.SouceRichTextBox.Size = new System.Drawing.Size(224, 189);
             this.SouceRichTextBox.TabIndex = 9;
             this.SouceRichTextBox.Text = resources.GetString("SouceRichTextBox.Text");
+            this.SouceRichTextBox.Leave += new System.EventHandler(this.ChangeSourceTextButton_Click);
             // 
             // OutputRichTextBox
             // 
@@ -163,14 +144,35 @@
             this.OutputRichTextBox.TabIndex = 10;
             this.OutputRichTextBox.Text = "";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(72, 334);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 11;
+            this.button1.Text = "Очистить";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(629, 12);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 12;
+            this.button2.Text = "Очистить";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.CLearRichTextButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(766, 374);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.OutputRichTextBox);
             this.Controls.Add(this.SouceRichTextBox);
-            this.Controls.Add(this.ChangeSourceTextButton);
             this.Controls.Add(this.BreakOpenButton);
             this.Controls.Add(this.DecryptButton);
             this.Controls.Add(this.EncryptButton);
@@ -193,11 +195,11 @@
         private System.Windows.Forms.Button EncryptButton;
         private System.Windows.Forms.Button DecryptButton;
         private System.Windows.Forms.Button BreakOpenButton;
-        private System.Windows.Forms.Button ChangeSourceTextButton;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.RichTextBox SouceRichTextBox;
         private System.Windows.Forms.RichTextBox OutputRichTextBox;
-        private System.Windows.Forms.Button ChangeMButton;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }
 

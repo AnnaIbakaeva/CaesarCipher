@@ -102,6 +102,7 @@ namespace FormApplication
 
             var minSumSquares = double.MaxValue;
             var resultText = "";
+            var minM = 0;
             for (int i = 0; i < 32; i++)
             {
                 M = i;
@@ -130,9 +131,12 @@ namespace FormApplication
                             resultText += " ";
                         }
                     }
+                    minM = M;
                 }
             }
+            resultText += " \n m = " + minM;
             M = savedM;
+
             return resultText;
         }
     }
