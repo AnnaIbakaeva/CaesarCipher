@@ -34,6 +34,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxM = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
+            this.keyWordTextBox = new System.Windows.Forms.TextBox();
             this.EncryptButton = new System.Windows.Forms.Button();
             this.DecryptButton = new System.Windows.Forms.Button();
             this.BreakOpenButton = new System.Windows.Forms.Button();
@@ -43,6 +45,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -55,6 +58,7 @@
             this.tabControl1.Size = new System.Drawing.Size(228, 89);
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.tabControl1.TabIndex = 0;
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // tabPage1
             // 
@@ -89,6 +93,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label1);
+            this.tabPage2.Controls.Add(this.keyWordTextBox);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -96,6 +102,24 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Шифр Виженера";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 12);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(93, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Ключевое слово:";
+            // 
+            // keyWordTextBox
+            // 
+            this.keyWordTextBox.Location = new System.Drawing.Point(16, 32);
+            this.keyWordTextBox.Name = "keyWordTextBox";
+            this.keyWordTextBox.Size = new System.Drawing.Size(182, 20);
+            this.keyWordTextBox.TabIndex = 0;
+            this.keyWordTextBox.Text = "орхидея";
+            this.keyWordTextBox.Leave += new System.EventHandler(this.keyWordTextBox_Leave);
             // 
             // EncryptButton
             // 
@@ -182,6 +206,8 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -200,6 +226,8 @@
         private System.Windows.Forms.RichTextBox OutputRichTextBox;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox keyWordTextBox;
     }
 }
 

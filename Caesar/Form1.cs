@@ -7,7 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using FormApplication;
+using Cryptology;
+using Cryptology.Vigener;
 
 namespace Caesar
 {
@@ -17,18 +18,23 @@ namespace Caesar
         private string sourceText;
         public Form1()
         {
+            InitializeComponent();
+            sourceText = SouceRichTextBox.Text;
+            ChangeCurrentCipher();
+        }
+
+        private void ChangeCurrentCipher()
+        {
             try
             {
-                InitializeComponent();
-                sourceText = SouceRichTextBox.Text;
-
                 var selectedTab = tabControl1.SelectedTab;
-                switch(selectedTab.Text)
+                switch (selectedTab.Text)
                 {
                     case @"Шифр Цезаря":
                         cypher = new CaesarCypher(GetM());
                         break;
                     case @"Шифр Виженера":
+                        cypher = new VigenerCypher(GetKeyWord());
                         break;
                     default:
                         throw new Exception("Не найден текущий вид шифрования");
@@ -40,15 +46,15 @@ namespace Caesar
             }
         }
 
-        private string RemoveUnnecessarySymbols(string text)
+        private string RemoveUnnecessarySymbols(string text, List<Alphabet> alphabets)
         {
             string newtext = "";
             text = text.ToLower().Replace('ё', 'е');
             foreach (var symbol in text)
             {
-                foreach (var key in Data.GetAlphabets().Keys)
+                foreach (var alphabet in alphabets)
                 {
-                    if (Data.GetAlphabets()[key].Letters.Contains(symbol))
+                    if (alphabet.Letters.Contains(symbol))
                     {
                         newtext += symbol;
                         break;
@@ -62,7 +68,7 @@ namespace Caesar
         {
             try
             {
-                var cipheredText = cypher.Encrypt(RemoveUnnecessarySymbols(sourceText));
+                var cipheredText = cypher.Encrypt(RemoveUnnecessarySymbols(sourceText, Data.GetAlphabets().Values.ToList()));
                 OutputRichTextBox.Text += cipheredText;
                 OutputRichTextBox.Text += "\n";
                 OutputRichTextBox.Text += "\n";
@@ -77,7 +83,7 @@ namespace Caesar
         {
             try
             {
-                string text = cypher.Decrypt(RemoveUnnecessarySymbols(sourceText));
+                string text = cypher.Decrypt(RemoveUnnecessarySymbols(sourceText, Data.GetAlphabets().Values.ToList()));
                 OutputRichTextBox.Text += text;
                 OutputRichTextBox.Text += "\n";
                 OutputRichTextBox.Text += "\n";
@@ -92,7 +98,7 @@ namespace Caesar
         {
             try
             {
-                var text = cypher.BreakOpen(RemoveUnnecessarySymbols(sourceText));
+                var text = cypher.BreakOpen(RemoveUnnecessarySymbols(sourceText, Data.GetAlphabets().Values.ToList()));
                 OutputRichTextBox.Text += text;
                 OutputRichTextBox.Text += "\n";
                 OutputRichTextBox.Text += "\n";
@@ -120,6 +126,18 @@ namespace Caesar
             }
         }
 
+        private string GetKeyWord()
+        {
+            var keyWord = keyWordTextBox.Text;
+            keyWord = keyWord.ToLower().Replace('ё', 'е');
+            var acceptedKeyWord = RemoveUnnecessarySymbols(keyWord, new List<Alphabet>() { Data.GetAlphabets()[AlphabetType.Russian] });
+            if (acceptedKeyWord != keyWord)
+            {
+                throw new Exception(@"Ключевое слово введено некорректно. Пожалуйста, используйте только символы русского алфавита.");
+            }
+            return acceptedKeyWord;
+        }
+
         private void ChangeMValue_Click(object sender, EventArgs e)
         {
             try
@@ -143,6 +161,26 @@ namespace Caesar
         private void button1_Click(object sender, EventArgs e)
         {
             SouceRichTextBox.Clear();
+        }
+
+        private void keyWordTextBox_Leave(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cypher is VigenerCypher)
+                {
+                    (cypher as VigenerCypher).KeyWord = GetKeyWord();
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ChangeCurrentCipher();
         }
     }
 }
