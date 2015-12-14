@@ -96,13 +96,22 @@ namespace Cryptology.Vigener
             }
 
             string keyWord = "";
-            var resultString = new String(breakText);
+            var resultString = "";
+            foreach(var symb in breakText)
+            {
+                resultString += symb;
+                if (resultString.Length > 4 && resultString.Length % 6 == 0)
+                {
+                    resultString += " ";
+                }
+            }
+            
             for (int i = 0; i < keyWordLength; i++)
             {
-                keyWord += GetKeyChar(resultString.ElementAt(i), text.ElementAt(i));
+                keyWord += GetKeyChar(breakText[i], text.ElementAt(i));
             }
            
-            resultString += " \n Ключевое слово: " + keyWord;
+            resultString += " \nКлючевое слово: " + keyWord;
             return resultString;
         }
 
@@ -233,14 +242,14 @@ namespace Cryptology.Vigener
             {
                 for (int j = i + 1; j < numbers.Count(); j++)
                 {
-                    int divider = numbers.ElementAt(j);
                     int dividend = numbers.ElementAt(i);
+                    int divider = numbers.ElementAt(j);
                     while (true)
                     {
                         int residue = dividend % divider;
                         if (residue == 0)
                         {
-                            if (divider > 3)
+                            if (divider > 2)
                                 dividers.Add(divider);
                             break;
                         }

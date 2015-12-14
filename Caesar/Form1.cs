@@ -68,7 +68,11 @@ namespace Caesar
         {
             try
             {
-                var cipheredText = cypher.Encrypt(RemoveUnnecessarySymbols(sourceText, Data.GetAlphabets().Values.ToList()));
+                string cipheredText = "";
+                if (cypher is VigenerCypher)
+                    cipheredText = cypher.Encrypt(RemoveUnnecessarySymbols(sourceText, new List<Alphabet>() { Data.GetAlphabets()[AlphabetType.Russian] }));
+                else
+                    cipheredText = cypher.Encrypt(RemoveUnnecessarySymbols(sourceText, Data.GetAlphabets().Values.ToList()));
                 OutputRichTextBox.Text += cipheredText;
                 OutputRichTextBox.Text += "\n";
                 OutputRichTextBox.Text += "\n";
@@ -83,7 +87,12 @@ namespace Caesar
         {
             try
             {
-                string text = cypher.Decrypt(RemoveUnnecessarySymbols(sourceText, Data.GetAlphabets().Values.ToList()));
+                string text = "";
+                if (cypher is VigenerCypher)
+                    text = cypher.Decrypt(RemoveUnnecessarySymbols(sourceText, new List<Alphabet>() { Data.GetAlphabets()[AlphabetType.Russian] }));
+                else
+                    text = cypher.Decrypt(RemoveUnnecessarySymbols(sourceText, Data.GetAlphabets().Values.ToList()));
+                
                 OutputRichTextBox.Text += text;
                 OutputRichTextBox.Text += "\n";
                 OutputRichTextBox.Text += "\n";
@@ -98,7 +107,12 @@ namespace Caesar
         {
             try
             {
-                var text = cypher.BreakOpen(RemoveUnnecessarySymbols(sourceText, Data.GetAlphabets().Values.ToList()));
+                string text = "";
+                if (cypher is VigenerCypher)
+                    text = cypher.BreakOpen(RemoveUnnecessarySymbols(sourceText, new List<Alphabet>() { Data.GetAlphabets()[AlphabetType.Russian] }));
+                else
+                    text = cypher.BreakOpen(RemoveUnnecessarySymbols(sourceText, Data.GetAlphabets().Values.ToList()));
+
                 OutputRichTextBox.Text += text;
                 OutputRichTextBox.Text += "\n";
                 OutputRichTextBox.Text += "\n";
@@ -133,7 +147,7 @@ namespace Caesar
             var acceptedKeyWord = RemoveUnnecessarySymbols(keyWord, new List<Alphabet>() { Data.GetAlphabets()[Cryptology.AlphabetType.Russian] });
             if (acceptedKeyWord != keyWord)
             {
-                throw new Exception(@"Ключевое слово введено некорректно. Пожалуйста, используйте только символы русского алфавита.");
+                throw new Exception(@"Ключевое слово введено некорректно. Пожалуйста, используйте только символы русского алфавита");
             }
             return acceptedKeyWord;
         }

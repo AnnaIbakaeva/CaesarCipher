@@ -81,13 +81,14 @@ namespace Cryptology
             foreach (var symbol in text)
             {
                 if (!symbolsCounter.ContainsKey(symbol))
-                    symbolsCounter.Add(symbol, 0);
-                symbolsCounter[symbol] += 1;
+                    symbolsCounter.Add(symbol, 1);
+                else
+                    symbolsCounter[symbol] += 1;
             }
 
             foreach (var key in symbolsCounter.Keys)
             {
-                var symbFrequency = symbolsCounter[key] / symbolsCounter.Count;
+                var symbFrequency = (float)((float)symbolsCounter[key]/ text.Length);//symbolsCounter.Count;
                 frequencies.Add(key, symbFrequency);
             }
 
@@ -126,15 +127,15 @@ namespace Cryptology
                     for (int j = 0; j < decryptedText.Length; j++)
                     {
                         resultText += decryptedText[j];
-                        if (resultText.Length > 4 && resultText.Length % 6 == 0)
-                        {
-                            resultText += " ";
-                        }
+                        //if (resultText.Length > 4 && resultText.Length % 6 == 0)
+                        //{
+                        //    resultText += " ";
+                        //}
                     }
                     minM = M;
                 }
             }
-            resultText += " \n m = " + minM;
+           //resultText += " \n m = " + minM;
             M = savedM;
 
             return resultText;
