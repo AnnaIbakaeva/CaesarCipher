@@ -118,7 +118,7 @@
             this.keyWordTextBox.Name = "keyWordTextBox";
             this.keyWordTextBox.Size = new System.Drawing.Size(182, 20);
             this.keyWordTextBox.TabIndex = 0;
-            this.keyWordTextBox.Text = "орхидея";
+            this.keyWordTextBox.Text = "поэзия";
             this.keyWordTextBox.Leave += new System.EventHandler(this.keyWordTextBox_Leave);
             // 
             // EncryptButton

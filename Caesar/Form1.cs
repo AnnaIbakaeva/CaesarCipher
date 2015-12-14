@@ -130,7 +130,7 @@ namespace Caesar
         {
             var keyWord = keyWordTextBox.Text;
             keyWord = keyWord.ToLower().Replace('ё', 'е');
-            var acceptedKeyWord = RemoveUnnecessarySymbols(keyWord, new List<Alphabet>() { Data.GetAlphabets()[AlphabetType.Russian] });
+            var acceptedKeyWord = RemoveUnnecessarySymbols(keyWord, new List<Alphabet>() { Data.GetAlphabets()[Cryptology.AlphabetType.Russian] });
             if (acceptedKeyWord != keyWord)
             {
                 throw new Exception(@"Ключевое слово введено некорректно. Пожалуйста, используйте только символы русского алфавита.");
