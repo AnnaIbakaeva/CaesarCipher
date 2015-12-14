@@ -129,66 +129,75 @@ namespace Cryptology.Vigener
         private int FindKeyWordLength(string text)
         {
             var text2 = text;
-
-            var shiftDistances = new List<List<int>>();
-            for (int i = 0; i < text.Length; i++)
-            {
-                List<int> distances = new List<int>();
-                int m = i + 1;
-                for (int j = m; j < text2.Length - 2; j++)
+            
+            List<int> distances = new List<int>();
+            for (int i = 0; i < text.Length-2; i++)
+            {                
+                for (int j = i+1; j < text2.Length - 2; j++)
                 {
                     if (text[i] == text2[j] && text[i + 1] == text2[j + 1] && text[i + 2] == text2[j + 2])
                     {
                         distances.Add(j - i);
                     }
                 }
-                if (distances.Count > 0)
-                    shiftDistances.Add(distances);
             }
-            return FindMaxCountDistances(shiftDistances);
+            return FindNOD(distances);
         }
 
-        private int FindMaxCountDistances(List<List<int>> shiftDistances)
+        private double FindD(List<int> shiftDistances)
         {
+            var notNullDistances = shiftDistances.FindAll((dist) => dist != 0);
+            return notNullDistances.Max() - notNullDistances.Average();
+        }
+
+        private int FindMaxCountDistances(List<int> shiftDistances)
+        {
+            var max = shiftDistances.Max();
+            int d;
+            if (max > 2)
+                d = 1;
+            else
+                d = 0;
             List<int> savedM = new List<int>();
-            var dict = new Dictionary<int, List<int>>();
+            var dict = new List<int>();
+            dict.Add(0);
             for (int i = 0; i < shiftDistances.Count; i++)
             {
                 if (i > 0)
                 {
                     if (i < shiftDistances.Count - 1)
                     {
-                        if (shiftDistances[i].Count - shiftDistances[i - 1].Count > 1  &&
-                            shiftDistances[i + 1].Count == shiftDistances[i].Count)
+                        if (shiftDistances[i] - shiftDistances[i - 1] > d  &&
+                            shiftDistances[i + 1] == shiftDistances[i])
                         {
                             int k = i + 2;
-                            while (shiftDistances[k].Count == shiftDistances[i].Count)
+                            while (shiftDistances[k] == shiftDistances[i])
                                 k++;
 
-                            if (shiftDistances[i].Count - shiftDistances[k].Count > 1 )
-                                dict.Add(i + 1, shiftDistances[i]);
+                            if (shiftDistances[i] - shiftDistances[k] > d )
+                                dict.Add(i+1);
                         }
 
-                        else if (shiftDistances[i].Count - shiftDistances[i - 1].Count > 1 &&
-                            shiftDistances[i].Count - shiftDistances[i + 1].Count > 1)
-                            dict.Add(i + 1, shiftDistances[i]);
+                        else if (shiftDistances[i] - shiftDistances[i - 1] > d &&
+                            shiftDistances[i] - shiftDistances[i + 1] > d)
+                            dict.Add(i + 1);
                     }
                     else
                     {
-                        if (shiftDistances[i].Count - shiftDistances[i - 1].Count > 1)
-                            dict.Add(i + 1, shiftDistances[i]);
+                        if (shiftDistances[i] - shiftDistances[i - 1] > d)
+                            dict.Add(i + 1);
                     }
                 }
                 else
                 {
-                    if (shiftDistances[i].Count > shiftDistances[i + 1].Count)
-                        dict.Add(i + 1, shiftDistances[i]);
+                    if (shiftDistances[i] - shiftDistances[i + 1] > d)
+                        dict.Add(i + 1);
                 }
             }
             var deltaLocalMaxList = new List<int>();
             for (int i = 1; i < dict.Count; i++)
             {
-                int delta = dict.Keys.ElementAt(i) - dict.Keys.ElementAt(i - 1);
+                int delta = dict[i] - dict[i - 1];
                 if (delta > 3)
                     deltaLocalMaxList.Add(delta);
             }
@@ -246,7 +255,27 @@ namespace Cryptology.Vigener
 
             dividers.Sort();
 
-            return dividers.FirstOrDefault();
+            var dividerCountDict = new Dictionary<int, int>();
+            foreach (var divider in dividers)
+            {
+                if (!dividerCountDict.ContainsKey(divider))
+                    dividerCountDict.Add(divider, 1);
+                else
+                    dividerCountDict[divider] += 1;
+            }
+
+            var maxCount = 0;
+            int maxDivider = 0;
+            foreach (var divider in dividerCountDict.Keys)
+            {
+                if (dividerCountDict[divider] > maxCount)
+                {
+                    maxCount = dividerCountDict[divider];
+                    maxDivider = divider;
+                }
+            }
+            return maxDivider;
+            
             //int maxDivider = 0;
             //foreach (int divider in dividers)
             //{
