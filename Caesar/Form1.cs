@@ -19,6 +19,7 @@ namespace Caesar
         public Form1()
         {
             InitializeComponent();
+            tabControl1.SelectedIndex = 1;
             sourceText = SouceRichTextBox.Text;
             ChangeCurrentCipher();
         }

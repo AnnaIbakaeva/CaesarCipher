@@ -152,89 +152,6 @@ namespace Cryptology.Vigener
             }
             return FindNOD(distances);
         }
-
-        //private double FindD(List<int> shiftDistances)
-        //{
-        //    var notNullDistances = shiftDistances.FindAll((dist) => dist != 0);
-        //    return notNullDistances.Max() - notNullDistances.Average();
-        //}
-
-        //private int FindMaxCountDistances(List<int> shiftDistances)
-        //{
-        //    var max = shiftDistances.Max();
-        //    int d;
-        //    if (max > 2)
-        //        d = 1;
-        //    else
-        //        d = 0;
-        //    List<int> savedM = new List<int>();
-        //    var dict = new List<int>();
-        //    dict.Add(0);
-        //    for (int i = 0; i < shiftDistances.Count; i++)
-        //    {
-        //        if (i > 0)
-        //        {
-        //            if (i < shiftDistances.Count - 1)
-        //            {
-        //                if (shiftDistances[i] - shiftDistances[i - 1] > d  &&
-        //                    shiftDistances[i + 1] == shiftDistances[i])
-        //                {
-        //                    int k = i + 2;
-        //                    while (shiftDistances[k] == shiftDistances[i])
-        //                        k++;
-
-        //                    if (shiftDistances[i] - shiftDistances[k] > d )
-        //                        dict.Add(i+1);
-        //                }
-
-        //                else if (shiftDistances[i] - shiftDistances[i - 1] > d &&
-        //                    shiftDistances[i] - shiftDistances[i + 1] > d)
-        //                    dict.Add(i + 1);
-        //            }
-        //            else
-        //            {
-        //                if (shiftDistances[i] - shiftDistances[i - 1] > d)
-        //                    dict.Add(i + 1);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            if (shiftDistances[i] - shiftDistances[i + 1] > d)
-        //                dict.Add(i + 1);
-        //        }
-        //    }
-        //    var deltaLocalMaxList = new List<int>();
-        //    for (int i = 1; i < dict.Count; i++)
-        //    {
-        //        int delta = dict[i] - dict[i - 1];
-        //        if (delta > 3)
-        //            deltaLocalMaxList.Add(delta);
-        //    }
-        //    deltaLocalMaxList.Sort();
-
-
-        //    var deltaCountDict = new Dictionary<int, int>();
-        //    foreach (var delta in deltaLocalMaxList)
-        //    {
-        //        if (!deltaCountDict.ContainsKey(delta))
-        //            deltaCountDict.Add(delta, 1);
-        //        else
-        //            deltaCountDict[delta] += 1;
-        //    }
-
-        //    var maxCount = 0;
-        //    int maxDelta = 0;
-        //    foreach (var delta in deltaCountDict.Keys)
-        //    {
-        //        if (deltaCountDict[delta] > maxCount)
-        //        {
-        //            maxCount = deltaCountDict[delta];
-        //            maxDelta = delta;
-        //        }
-        //    }
-        //    return maxDelta;
-        //}
-
         private int FindNOD(IEnumerable<int> numbers)
         {
             List<int> dividers = new List<int>();
@@ -264,6 +181,13 @@ namespace Cryptology.Vigener
 
             dividers.Sort();
 
+            var dividerCountDict = CountDividersAmount(dividers);
+
+            return GetMostFrequentDivider(dividerCountDict);
+        }
+
+        private Dictionary<int, int> CountDividersAmount(List<int> dividers)
+        {
             var dividerCountDict = new Dictionary<int, int>();
             foreach (var divider in dividers)
             {
@@ -272,7 +196,11 @@ namespace Cryptology.Vigener
                 else
                     dividerCountDict[divider] += 1;
             }
+            return dividerCountDict;
+        }
 
+        private int GetMostFrequentDivider(Dictionary<int, int> dividerCountDict)
+        {
             var maxCount = 0;
             int maxDivider = 0;
             foreach (var divider in dividerCountDict.Keys)
